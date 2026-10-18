@@ -109,14 +109,16 @@
       />
     </div>
 
-    <!-- Modal Chọn trạng thái khi thêm vào tủ -->
-    <AddToLibraryModal
-      v-if="showAddModal && targetBook"
-      :book="targetBook"
-      :is-submitting="isSubmitting"
-      @close="showAddModal = false"
-      @confirm="(args) => confirmAddToLibrary(args)"
-    />
+    <!-- Modal Chọn trạng thái khi thêm vào tủ (Teleport ra body) -->
+    <Teleport to="body">
+      <AddToLibraryModal
+        v-if="showAddModal && targetBook"
+        :book="targetBook"
+        :is-submitting="isSubmitting"
+        @close="showAddModal = false"
+        @confirm="(args) => confirmAddToLibrary(args)"
+      />
+    </Teleport>
   </div>
 </template>
 

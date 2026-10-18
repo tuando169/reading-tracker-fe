@@ -32,7 +32,10 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { type LibraryStats } from "@/types/libraryTypes";
-import { ReadingStatusEnum } from "@/constants/readingStatus";
+import {
+  ReadingStatusEnum,
+  readingStatusOptions,
+} from "@/constants/readingStatus";
 
 const props = defineProps<{
   modelValue: ReadingStatusEnum | null;
@@ -46,7 +49,8 @@ defineEmits<{
 const tabs = computed(() => [
   { label: "Tất cả sách", value: null, count: props.stats.totalBooks },
   {
-    label: "Chưa đọc",
+    label: readingStatusOptions.find((r) => r.id === ReadingStatusEnum.NotRead)
+      ?.label,
     value: ReadingStatusEnum.NotRead,
     count:
       props.stats.totalBooks -
@@ -54,12 +58,15 @@ const tabs = computed(() => [
       props.stats.finishedBooks,
   },
   {
-    label: "Đang đọc",
+    label: readingStatusOptions.find((r) => r.id === ReadingStatusEnum.Reading)
+      ?.label,
     value: ReadingStatusEnum.Reading,
     count: props.stats.readingBooks,
   },
   {
-    label: "Đã hoàn thành",
+    label: readingStatusOptions.find(
+      (r) => r.id === ReadingStatusEnum.Completed,
+    )?.label,
     value: ReadingStatusEnum.Completed,
     count: props.stats.finishedBooks,
   },

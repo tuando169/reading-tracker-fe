@@ -1,6 +1,6 @@
 import { ApiService } from "./apiService";
 import type { ApiResponse } from "@/types/apiTypes";
-import type { BookItem, BookDetail, BookSearchParams } from "@/types/bookTypes";
+import type { BookItem, BookSearchParams } from "@/types/bookTypes";
 import { apiEndpoints } from "@/constants/apiEndpoints";
 
 export class BookService extends ApiService {

@@ -57,9 +57,5 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
 import { BookOpen, Search, Library } from "lucide-vue-next";
-import { useLibraryStore } from "@/stores/libraryStore";
-
-const libraryStore = useLibraryStore();
 </script>

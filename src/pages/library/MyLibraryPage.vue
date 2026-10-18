@@ -104,32 +104,35 @@
       />
     </div>
 
-    <!-- Modal Cập nhật tiến độ -->
-    <UpdateProgressModal
-      v-if="showProgressModal && activeBook"
-      :book="activeBook"
-      :is-submitting="isActionSubmitting"
-      @close="showProgressModal = false"
-      @save="handleSaveProgress"
-    />
+    <!-- Modals (Teleport ra body để phủ kín toàn màn hình bao gồm cả Header) -->
+    <Teleport to="body">
+      <!-- Modal Cập nhật tiến độ -->
+      <UpdateProgressModal
+        v-if="showProgressModal && activeBook"
+        :book="activeBook"
+        :is-submitting="isActionSubmitting"
+        @close="showProgressModal = false"
+        @save="handleSaveProgress"
+      />
 
-    <!-- Modal Đánh giá & Ghi chú -->
-    <RatingModal
-      v-if="showRatingModal && activeBook"
-      :book="activeBook"
-      :is-submitting="isActionSubmitting"
-      @close="showRatingModal = false"
-      @save="handleSaveRating"
-    />
+      <!-- Modal Đánh giá & Ghi chú -->
+      <RatingModal
+        v-if="showRatingModal && activeBook"
+        :book="activeBook"
+        :is-submitting="isActionSubmitting"
+        @close="showRatingModal = false"
+        @save="handleSaveRating"
+      />
 
-    <!-- Modal Xác nhận xóa -->
-    <ConfirmDeleteModal
-      v-if="showDeleteModal && activeBook"
-      :book-title="activeBook.title"
-      :is-submitting="isActionSubmitting"
-      @close="showDeleteModal = false"
-      @confirm="handleConfirmDelete"
-    />
+      <!-- Modal Xác nhận xóa -->
+      <ConfirmDeleteModal
+        v-if="showDeleteModal && activeBook"
+        :book-title="activeBook.title"
+        :is-submitting="isActionSubmitting"
+        @close="showDeleteModal = false"
+        @confirm="handleConfirmDelete"
+      />
+    </Teleport>
   </div>
 </template>
 
@@ -138,7 +141,6 @@ import { ref, onMounted } from "vue";
 import { useLibraryStore } from "@/stores/libraryStore";
 import { useToastStore } from "@/stores/toastStore";
 import { type LibraryBook } from "@/types/libraryTypes";
-import { ReadingStatusEnum } from "@/constants/readingStatus";
 import { Plus, Search, BookOpenCheck } from "lucide-vue-next";
 
 import LibraryStatsHeader from "./components/LibraryStatsHeader.vue";
