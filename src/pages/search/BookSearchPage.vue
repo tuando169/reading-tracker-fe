@@ -2,18 +2,17 @@
   <div class="space-y-6">
     <!-- Hero / Header Search -->
     <div
-      class="bg-gradient-to-br from-indigo-700 via-indigo-600 to-violet-700 rounded-2xl p-5 sm:p-6 text-white shadow-lg shadow-indigo-100/50 flex flex-col items-center text-center"
+      class="sticky top-20 z-20 bg-gradient-to-br from-indigo-700 via-indigo-600 to-violet-700 rounded-2xl p-4 sm:p-5 text-white shadow-xl shadow-indigo-950/10 flex flex-col items-center text-center transition-all backdrop-blur-md"
     >
-      <h1 class="text-xl sm:text-2xl font-bold tracking-tight max-w-xl">
+      <h1 class="text-lg sm:text-xl font-bold tracking-tight max-w-xl">
         Tìm kiếm sách cho tủ sách của bạn
       </h1>
-      <p class="text-indigo-100 text-xs sm:text-sm mt-1 max-w-lg">
-        Nhập tên sách hoặc tác giả để tìm và thêm trực tiếp vào danh sách theo
-        dõi.
+      <p class="text-indigo-100 text-xs sm:text-sm mt-0.5 max-w-lg hidden sm:block">
+        Nhập tên sách hoặc tác giả để tìm và thêm trực tiếp vào danh sách theo dõi.
       </p>
 
       <!-- Search Input Container -->
-      <div class="w-full max-w-xl mt-4">
+      <div class="w-full max-w-xl mt-3">
         <BookSearchInput
           v-model="bookStore.searchQuery"
           @search="handleSearch"
@@ -109,6 +108,7 @@
         :total-pages="bookStore.meta.totalPages"
         :limit="bookStore.meta.limit"
         @change-page="changePage"
+        @change-limit="changeLimit"
       />
     </div>
 
@@ -168,6 +168,14 @@ const changePage = (page: number) => {
   const query = bookStore.searchQuery.trim();
   if (query.length >= 3) {
     bookStore.searchBooks(query, page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+};
+
+const changeLimit = (newLimit: number) => {
+  const query = bookStore.searchQuery.trim();
+  if (query.length >= 3) {
+    bookStore.searchBooks(query, 1, newLimit);
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 };

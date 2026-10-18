@@ -11,8 +11,26 @@
         <span>Trang trước</span>
       </button>
 
-      <div class="px-3.5 py-2 text-xs sm:text-sm font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl shadow-xs">
+      <div
+        class="px-3.5 py-2 text-xs sm:text-sm font-semibold text-slate-700 bg-white border border-slate-200 rounded-xl shadow-xs"
+      >
         Trang {{ currentPage }} / {{ totalPages || 1 }}
+      </div>
+
+      <!-- Chọn số lượng trên mỗi trang (limit) -->
+      <div
+        class="flex items-center bg-white border border-slate-200 rounded-xl px-2.5 py-1.5 shadow-xs"
+      >
+        <select
+          id="limit-select"
+          :value="limit"
+          @change="onLimitChange"
+          class="bg-transparent text-xs sm:text-sm font-semibold text-slate-700 focus:outline-none cursor-pointer"
+        >
+          <option :value="10">10 / trang</option>
+          <option :value="20">20 / trang</option>
+          <option :value="50">50 / trang</option>
+        </select>
       </div>
 
       <button
@@ -28,7 +46,7 @@
 </template>
 
 <script setup lang="ts">
-import { ChevronLeft, ChevronRight } from 'lucide-vue-next';
+import { ChevronLeft, ChevronRight } from "lucide-vue-next";
 
 withDefaults(
   defineProps<{
@@ -37,12 +55,17 @@ withDefaults(
     limit?: number;
   }>(),
   {
-    limit: 10
-  }
+    limit: 10,
+  },
 );
 
-defineEmits<{
-  (e: 'change-page', page: number): void;
+const emit = defineEmits<{
+  (e: "change-page", page: number): void;
+  (e: "change-limit", limit: number): void;
 }>();
 
+const onLimitChange = (event: Event) => {
+  const target = event.target as HTMLSelectElement;
+  emit("change-limit", Number(target.value));
+};
 </script>
