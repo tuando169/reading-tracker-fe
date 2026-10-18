@@ -44,12 +44,11 @@ export const useLibraryStore = defineStore("library", () => {
     );
   });
 
-  const fetchLibraryBooks = async (status?: ReadingStatusEnum) => {
+  const fetchLibraryBooks = async () => {
     isLoading.value = true;
     error.value = null;
     try {
-      // Tải tất cả hoặc theo status
-      const data = await libraryService.getLibrary(status);
+      const data = await libraryService.getLibrary();
       libraryBooks.value = data;
     } catch (err: any) {
       error.value = err.message || "Không thể tải tủ sách";

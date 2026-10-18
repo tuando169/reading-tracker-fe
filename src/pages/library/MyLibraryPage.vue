@@ -98,6 +98,7 @@
         v-for="book in libraryStore.filteredBooks"
         :key="book.id"
         :book="book"
+        @view-detail="openDetailModal"
         @update-progress="openProgressModal"
         @rate-note="openRatingModal"
         @remove="openDeleteModal"
@@ -106,6 +107,13 @@
 
     <!-- Modals (Teleport ra body để phủ kín toàn màn hình bao gồm cả Header) -->
     <Teleport to="body">
+      <!-- Modal Chi tiết sách -->
+      <LibraryDetailModal
+        v-if="showDetailModal && activeBook"
+        :book="activeBook"
+        @close="showDetailModal = false"
+      />
+
       <!-- Modal Cập nhật tiến độ -->
       <UpdateProgressModal
         v-if="showProgressModal && activeBook"
@@ -146,6 +154,7 @@ import { Plus, Search, BookOpenCheck } from "lucide-vue-next";
 import LibraryStatsHeader from "./components/LibraryStatsHeader.vue";
 import LibraryFilterTabs from "./components/LibraryFilterTabs.vue";
 import LibraryBookCard from "./components/LibraryBookCard.vue";
+import LibraryDetailModal from "./modals/LibraryDetailModal.vue";
 import UpdateProgressModal from "./modals/UpdateProgressModal.vue";
 import RatingModal from "./modals/RatingModal.vue";
 import ConfirmDeleteModal from "./modals/ConfirmDeleteModal.vue";
@@ -156,9 +165,15 @@ const toastStore = useToastStore();
 const activeBook = ref<LibraryBook | null>(null);
 const isActionSubmitting = ref(false);
 
+const showDetailModal = ref(false);
 const showProgressModal = ref(false);
 const showRatingModal = ref(false);
 const showDeleteModal = ref(false);
+
+const openDetailModal = (book: LibraryBook) => {
+  activeBook.value = book;
+  showDetailModal.value = true;
+};
 
 const loadLibrary = () => {
   libraryStore.fetchLibraryBooks();

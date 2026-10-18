@@ -5,17 +5,13 @@ import type {
   AddBookPayload,
   UpdateBookPayload,
 } from "@/types/libraryTypes";
-import { ReadingStatusEnum } from "@/constants/readingStatus";
 import { apiEndpoints } from "@/constants/apiEndpoints";
 
 export class LibraryService extends ApiService {
-  async getLibrary(status?: ReadingStatusEnum): Promise<LibraryBook[]> {
+  async getLibrary(): Promise<LibraryBook[]> {
     try {
       const response = await this.get<ApiResponse<LibraryBook[]>>(
         apiEndpoints.library.getAll,
-        {
-          params: status !== undefined ? { status } : {},
-        },
       );
       return response.data;
     } catch (errorCode) {

@@ -5,9 +5,12 @@ export interface LibraryBook {
   title: string;
   author: string;
   coverUrl: string;
+  description?: string | null;
+  publishYear?: number | null;
+  totalPages?: number | null;
+  subjects?: string[];
   status: ReadingStatusEnum;
   currentPage: number;
-  totalPages: number;
   rating: number; // 0: chưa đánh giá, 1-5 sao
   note: string;
   startedAt?: string | null;
