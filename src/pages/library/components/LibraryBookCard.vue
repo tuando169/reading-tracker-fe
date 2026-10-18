@@ -8,8 +8,7 @@
       class="relative w-full sm:w-28 sm:h-44 shrink-0 aspect-[2/3] sm:aspect-auto rounded-xl overflow-hidden bg-slate-100 shadow-inner cursor-pointer"
     >
       <img
-        :src="book.coverUrl"
-        @error="handleImageError"
+        :src="book.coverUrl ?? '/placeholder-cover.svg'"
         :alt="book.title"
         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         loading="lazy"
@@ -180,9 +179,5 @@ const formatDate = (dateStr?: string | null) => {
   } catch {
     return dateStr;
   }
-};
-
-const handleImageError = (e: Event) => {
-  (e.target as HTMLImageElement).src = "/placeholder-cover.svg";
 };
 </script>

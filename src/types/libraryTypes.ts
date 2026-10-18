@@ -4,7 +4,7 @@ export interface LibraryBook {
   id: string;
   title: string;
   author: string;
-  coverUrl: string;
+  coverUrl?: string;
   description?: string | null;
   publishYear?: number | null;
   totalPages?: number | null;

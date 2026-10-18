@@ -29,8 +29,7 @@
       >
         <div class="w-24 sm:w-28 shrink-0 self-center sm:self-start">
           <img
-            :src="detail?.coverUrl || book.coverUrl || '/placeholder-cover.svg'"
-            @error="handleImageError"
+            :src="detail?.coverUrl || '/placeholder-cover.svg'"
             :alt="book.title"
             class="w-full aspect-[2/3] object-cover rounded-xl shadow-md border border-slate-200/80"
           />
@@ -195,19 +194,15 @@ const emit = defineEmits<{
   (e: "confirm", status: ReadingStatusEnum): void;
 }>();
 
-const detail = ref<BookDetail | null>(null);
+const detail = ref<BookDetail>();
 
 const selectedStatus = ref<ReadingStatusEnum>(ReadingStatusEnum.NotRead);
 
 onMounted(() => {
-  detail.value = props.book as unknown as BookDetail;
+  detail.value = props.book as BookDetail;
 });
 
 const confirmAdd = () => {
   emit("confirm", selectedStatus.value);
-};
-
-const handleImageError = (e: Event) => {
-  (e.target as HTMLImageElement).src = "/placeholder-cover.svg";
 };
 </script>

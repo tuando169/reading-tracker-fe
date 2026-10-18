@@ -28,7 +28,6 @@
         <div class="w-24 sm:w-28 shrink-0 self-center sm:self-start">
           <img
             :src="book.coverUrl || '/placeholder-cover.svg'"
-            @error="handleImageError"
             :alt="book.title"
             class="w-full aspect-[2/3] object-cover rounded-xl shadow-md border border-slate-200/80"
           />
@@ -136,8 +135,4 @@ defineProps<{
 defineEmits<{
   (e: "close"): void;
 }>();
-
-const handleImageError = (e: Event) => {
-  (e.target as HTMLImageElement).src = "/placeholder-cover.svg";
-};
 </script>

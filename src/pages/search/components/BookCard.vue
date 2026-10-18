@@ -9,7 +9,6 @@
     >
       <img
         :src="book.coverUrl || '/placeholder-cover.svg'"
-        @error="handleImageError"
         :alt="book.title"
         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
         loading="lazy"
@@ -78,7 +77,4 @@ defineEmits<{
   (e: "add-to-library", book: BookItem): void;
 }>();
 
-const handleImageError = (e: Event) => {
-  (e.target as HTMLImageElement).src = "/placeholder-cover.svg";
-};
 </script>

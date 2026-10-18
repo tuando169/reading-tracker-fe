@@ -7,7 +7,7 @@ export interface BookItem {
   publishYear?: number | null;
   totalPages?: number | null;
   subjects?: string[];
-  coverUrl: string | null;
+  coverUrl?: string;
   inLibrary?: boolean;
 }
 
