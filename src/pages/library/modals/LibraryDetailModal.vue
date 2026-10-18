@@ -127,7 +127,7 @@
 
 <script setup lang="ts">
 import type { LibraryBook } from "@/types/libraryTypes";
-import { X, BookOpen, Calendar, CheckCircle2 } from "lucide-vue-next";
+import { X, BookOpen, Calendar } from "lucide-vue-next";
 
 defineProps<{
   book: LibraryBook;
@@ -136,20 +136,6 @@ defineProps<{
 defineEmits<{
   (e: "close"): void;
 }>();
-
-const formatDate = (dateStr?: string | null) => {
-  if (!dateStr) return "";
-  try {
-    const d = new Date(dateStr);
-    return d.toLocaleDateString("vi-VN", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
-  } catch {
-    return dateStr;
-  }
-};
 
 const handleImageError = (e: Event) => {
   (e.target as HTMLImageElement).src = "/placeholder-cover.svg";

@@ -151,7 +151,11 @@ const validationError = computed(() => {
   if (currentPage.value < 0) {
     return "Số trang không được nhỏ hơn 0.";
   }
-  if (props.book.totalPages > 0 && currentPage.value > props.book.totalPages) {
+  if (
+    props.book.totalPages &&
+    props.book.totalPages > 0 &&
+    currentPage.value > props.book.totalPages
+  ) {
     return `Số trang không được vượt quá tổng số trang (${props.book.totalPages}).`;
   }
   return null;
