@@ -41,13 +41,8 @@ withDefaults(
   }
 );
 
-const emit = defineEmits<{
+defineEmits<{
   (e: 'change-page', page: number): void;
-  (e: 'change-limit', limit: number): void;
 }>();
 
-const onLimitChange = (event: Event) => {
-  const target = event.target as HTMLSelectElement;
-  emit('change-limit', Number(target.value));
-};
 </script>

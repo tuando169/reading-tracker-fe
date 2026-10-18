@@ -156,13 +156,6 @@ const changePage = (page: number) => {
   }
 };
 
-const changeLimit = (newLimit: number) => {
-  const query = (searchQuery.value || bookStore.searchQuery).trim();
-  if (query.length >= 3) {
-    bookStore.searchBooks(query, 1, newLimit);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-};
 
 const openBookDetail = async (bookId: number) => {
   showDetailModal.value = true;
