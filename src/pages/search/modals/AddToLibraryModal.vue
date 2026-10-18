@@ -12,9 +12,7 @@
         <h3 class="text-lg font-bold text-slate-900 flex items-center gap-2">
           <BookPlus class="w-5 h-5 text-indigo-600" />
           <span>{{
-            book.isInLibrary || book.inLibrary
-              ? "Thông tin chi tiết cuốn sách"
-              : "Thêm sách vào tủ"
+            book.inLibrary ? "Thông tin chi tiết cuốn sách" : "Thêm sách vào tủ"
           }}</span>
         </h3>
         <button
@@ -58,7 +56,7 @@
             >
               <Calendar class="w-3.5 h-3.5 text-slate-400" />
               <span
-                >Năm:
+                >Xuất bản:
                 {{ (detail?.publishYear ?? book.publishYear) || "N/A" }}</span
               >
             </span>
@@ -115,7 +113,7 @@
       </div>
 
       <!-- Status Selection (chỉ hiện khi sách chưa có trong tủ) -->
-      <div v-if="!book.isInLibrary && !book.inLibrary" class="space-y-2">
+      <div v-if="!book.inLibrary" class="space-y-2">
         <label
           class="block text-xs font-bold text-slate-700 uppercase tracking-wider"
         >
@@ -161,10 +159,10 @@
           @click="$emit('close')"
           class="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100 transition"
         >
-          {{ book.isInLibrary || book.inLibrary ? "Đóng" : "Hủy" }}
+          {{ book.inLibrary ? "Đóng" : "Hủy" }}
         </button>
         <button
-          v-if="!book.isInLibrary && !book.inLibrary"
+          v-if="!book.inLibrary"
           type="button"
           @click="confirmAdd"
           :disabled="isSubmitting"

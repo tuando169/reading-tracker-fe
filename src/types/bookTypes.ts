@@ -9,7 +9,6 @@ export interface BookItem {
   subjects?: string[];
   coverUrl: string | null;
   inLibrary?: boolean;
-  isInLibrary?: boolean;
 }
 
 export interface BookDetail extends BookItem {

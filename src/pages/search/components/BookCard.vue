@@ -39,14 +39,14 @@
           {{ book.author || "Chưa rõ tác giả" }}
         </p>
         <p class="text-[10px] text-slate-400 font-medium mt-0.5">
-          {{ book.publishYear ? `Năm: ${book.publishYear}` : "" }}
+          {{ book.publishYear ? `Xuất bản: ${book.publishYear}` : "" }}
         </p>
       </div>
 
       <!-- Action Button -->
       <div class="pt-1">
         <div
-          v-if="book.isInLibrary"
+          v-if="book.inLibrary"
           class="w-full py-1.5 px-2 rounded-lg bg-emerald-50 text-emerald-700 text-[11px] font-bold border border-emerald-200 flex items-center justify-center gap-1 cursor-default select-none"
         >
           <Check class="w-3 h-3" />

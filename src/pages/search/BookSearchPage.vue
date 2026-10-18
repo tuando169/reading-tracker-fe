@@ -14,7 +14,10 @@
 
       <!-- Search Input Container -->
       <div class="w-full max-w-xl mt-4">
-        <BookSearchInput v-model="searchQuery" @search="handleSearch" />
+        <BookSearchInput
+          v-model="bookStore.searchQuery"
+          @search="handleSearch"
+        />
       </div>
     </div>
 
@@ -25,7 +28,7 @@
     >
       <span>{{ bookStore.error }}</span>
       <button
-        @click="handleSearch(searchQuery)"
+        @click="handleSearch(bookStore.searchQuery)"
         class="font-bold underline hover:text-rose-950 ml-2"
       >
         Thử lại
@@ -141,8 +144,9 @@ const bookStore = useBookStore();
 const libraryStore = useLibraryStore();
 const toastStore = useToastStore();
 
-const searchQuery = ref("");
-const hasSearched = ref(false);
+const hasSearched = ref(
+  Boolean(bookStore.searchQuery.trim() || bookStore.books.length > 0),
+);
 
 const showAddModal = ref(false);
 const targetBook = ref<BookItem>();
@@ -150,6 +154,7 @@ const isSubmitting = ref(false);
 
 const handleSearch = (query: string) => {
   const trimmed = query.trim();
+  bookStore.searchQuery = query;
   if (trimmed.length >= 3) {
     hasSearched.value = true;
     bookStore.searchBooks(trimmed, 1);
@@ -160,7 +165,7 @@ const handleSearch = (query: string) => {
 };
 
 const changePage = (page: number) => {
-  const query = (searchQuery.value || bookStore.searchQuery).trim();
+  const query = bookStore.searchQuery.trim();
   if (query.length >= 3) {
     bookStore.searchBooks(query, page);
     window.scrollTo({ top: 0, behavior: "smooth" });

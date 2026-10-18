@@ -41,8 +41,7 @@ export const useBookStore = defineStore('book', () => {
       const response = await bookService.searchBooks(params);
       books.value = (response.data || []).map((item) => ({
         ...item,
-        inLibrary: Boolean(item.inLibrary),
-        isInLibrary: Boolean(item.inLibrary)
+        inLibrary: Boolean(item.inLibrary)
       }));
       if (response.meta) {
         meta.value = response.meta;
@@ -56,13 +55,13 @@ export const useBookStore = defineStore('book', () => {
   };
 
 
-  const markBookAsAdded = (bookId: number) => {
-    const book = books.value.find((b) => b.id === bookId);
+  const markBookAsAdded = (bookId: string | number) => {
+    const book = books.value.find((b) => String(b.id) === String(bookId));
     if (book) {
-      book.isInLibrary = true;
+      book.inLibrary = true;
     }
-    if (currentBookDetail.value && currentBookDetail.value.id === bookId) {
-      currentBookDetail.value.isInLibrary = true;
+    if (currentBookDetail.value && String(currentBookDetail.value.id) === String(bookId)) {
+      currentBookDetail.value.inLibrary = true;
     }
   };
 

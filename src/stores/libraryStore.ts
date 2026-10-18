@@ -69,7 +69,6 @@ export const useLibraryStore = defineStore("library", () => {
       if (!exists) {
         libraryBooks.value.unshift(newBook);
       }
-      // Đồng bộ cờ isInLibrary bên bookStore
       const bookStore = useBookStore();
       bookStore.markBookAsAdded(payload.id);
       return newBook;
