@@ -25,7 +25,7 @@
 
 | Modal Cập nhật Đánh giá  |  Modal Xoá khỏi tủ sách  |
 | :----------------------: | :----------------------: |
-| ![alt text](image-2.png) | ![alt text](image-4.png) |
+| ![alt text](image-5.png) | ![alt text](image-4.png) |
 
 ---
 
@@ -136,7 +136,6 @@ Frontend được triển khai trên nền tảng **Vercel** với quy trình t�
    - Đã tạo file `vercel.json` ở thư mục gốc để Vercel điều hướng toàn bộ request về `index.html`, tránh lỗi **404 Not Found** khi người dùng reload trang hoặc truy cập URL con trực tiếp:
      ```json
      {
-       "version": 2,
        "rewrites": [
          {
            "source": "/(.*)",
