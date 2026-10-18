@@ -158,15 +158,17 @@ Frontend được triển khai trên nền tảng **Vercel** với quy trình t�
 ### 7.2. Hạn chế hiện tại (Limitations)
 
 - Chưa có hệ thống tài khoản và phân quyền người dùng (chưa có màn hình Login / Register / JWT).
+- Trạng thái đọc (`status`) hiện được hệ thống tự động suy diễn và gán dựa theo tiến độ số trang đang đọc (`currentPage = 0` là *Chưa đọc*, `0 < currentPage < totalPages` là *Đang đọc*, `currentPage = totalPages` là *Đã đọc*), người dùng chưa thể chủ động tùy biến hoặc chọn trạng thái đọc thủ công theo ý muốn độc lập với số trang.
 - Tốc độ tải danh sách sách khi tìm kiếm phụ thuộc một phần vào độ trễ mạng và phản hồi từ API Open Library công cộng.
 - Dữ liệu ảnh bìa từ Open Library có thể bị thiếu đối với một số tác phẩm hiếm (đã có ảnh placeholder dự phòng).
 
 ### 7.3. Hướng cải thiện nếu có thêm thời gian
 
-1. **Xác thực người dùng (Authentication):** Bổ sung màn hình đăng nhập / đăng ký qua Google OAuth2 hoặc Email/Password để mỗi người dùng có tủ sách riêng biệt.
-2. **Offline Support & PWA:** Biến ứng dụng thành Progressive Web App (PWA) với Service Worker và IndexedDB, cho phép ghi nhận số trang đọc ngay cả khi không có kết nối Internet.
-3. **Thống kê nâng cao & Gamification:**
+1. **Tùy biến trạng thái đọc thủ công:** Cho phép người dùng chủ động lựa chọn và gán trạng thái đọc (_Chưa đọc_, _Đang đọc_, _Đã đọc_, _Tạm ngưng_, _Bỏ dở_) độc lập với số trang đọc hiện tại.
+2. **Xác thực người dùng (Authentication):** Bổ sung màn hình đăng nhập / đăng ký qua Google OAuth2 hoặc Email/Password để mỗi người dùng có tủ sách riêng biệt.
+3. **Offline Support & PWA:** Biến ứng dụng thành Progressive Web App (PWA) với Service Worker và IndexedDB, cho phép ghi nhận số trang đọc ngay cả khi không có kết nối Internet.
+4. **Thống kê nâng cao & Gamification:**
    - Biểu đồ thống kê số trang đọc mỗi ngày/tuần/tháng (sử dụng Chart.js).
    - Thiết lập mục tiêu đọc sách hàng năm (Reading Goal Challenge).
    - Huy hiệu chúc mừng và hiệu ứng ăn mừng khi hoàn thành mục tiêu đọc.
-4. **Tối ưu trải nghiệm đọc:** Ghi chép trích dẫn hay (Quote snippets), thêm ảnh chụp trang sách vào ghi chú.
+5. **Tối ưu trải nghiệm đọc:** Ghi chép trích dẫn hay (Quote snippets), thêm ảnh chụp trang sách vào ghi chú.
