@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { bookService } from '@/services/bookService';
-import type { BookItem, BookDetail, PaginationMeta, BookSearchParams } from '@/types';
+import type { PaginationMeta } from '@/types/apiTypes';
+import type { BookItem, BookDetail, BookSearchParams } from '@/types/bookTypes';
 
 export const useBookStore = defineStore('book', () => {
   const books = ref<BookItem[]>([]);
@@ -38,7 +39,11 @@ export const useBookStore = defineStore('book', () => {
     try {
       const params: BookSearchParams = { keyword: query, page, limit: meta.value.limit };
       const response = await bookService.searchBooks(params);
-      books.value = response.data;
+      books.value = (response.data || []).map((item) => ({
+        ...item,
+        inLibrary: Boolean(item.inLibrary),
+        isInLibrary: Boolean(item.inLibrary)
+      }));
       if (response.meta) {
         meta.value = response.meta;
       }
@@ -50,19 +55,6 @@ export const useBookStore = defineStore('book', () => {
     }
   };
 
-  const fetchBookDetail = async (bookId: number): Promise<BookDetail | null> => {
-    isDetailLoading.value = true;
-    try {
-      const detail = await bookService.getBookDetail(bookId);
-      currentBookDetail.value = detail;
-      return detail;
-    } catch (err: any) {
-      error.value = err.message || 'Lỗi khi tải chi tiết sách';
-      return null;
-    } finally {
-      isDetailLoading.value = false;
-    }
-  };
 
   const markBookAsAdded = (bookId: number) => {
     const book = books.value.find((b) => b.id === bookId);
@@ -84,7 +76,6 @@ export const useBookStore = defineStore('book', () => {
     currentBookDetail,
     isDetailLoading,
     searchBooks,
-    fetchBookDetail,
     markBookAsAdded
   };
 });

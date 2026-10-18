@@ -1,15 +1,11 @@
-export enum ReadingStatus {
-  NOT_READ = 0, // Chưa đọc / Muốn đọc
-  READING = 1,  // Đang đọc
-  COMPLETED = 2 // Đã đọc / Hoàn thành
-}
+import { ReadingStatusEnum } from "@/constants/readingStatus";
 
 export interface LibraryBook {
-  bookId: number;
+  id: string;
   title: string;
   author: string;
   coverUrl: string;
-  status: ReadingStatus;
+  status: ReadingStatusEnum;
   currentPage: number;
   totalPages: number;
   rating: number; // 0: chưa đánh giá, 1-5 sao
@@ -25,12 +21,12 @@ export interface LibraryStats {
 }
 
 export interface AddBookPayload {
-  bookId: number;
-  status: ReadingStatus;
+  id: number;
+  status: ReadingStatusEnum;
 }
 
 export interface UpdateBookPayload {
-  status?: ReadingStatus;
+  id: string;
   currentPage?: number;
   rating?: number;
   note?: string;

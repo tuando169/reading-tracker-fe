@@ -1,17 +1,22 @@
 export interface BookItem {
   id: number;
-  workId:string;
+  workId: string;
   title: string;
-  author: string;
+  author: string | null;
+  description?: string | null;
   publishYear?: number | null;
+  totalPages?: number | null;
+  subjects?: string[];
   coverUrl: string | null;
-  isInLibrary: boolean;
+  inLibrary?: boolean;
+  isInLibrary?: boolean;
 }
 
 export interface BookDetail extends BookItem {
-  description: string;
-  subjects: string[];
-  totalPages: number;
+  status?: number;
+  currentPage?: number;
+  rating?: number;
+  note?: string;
 }
 
 export interface BookSearchParams {

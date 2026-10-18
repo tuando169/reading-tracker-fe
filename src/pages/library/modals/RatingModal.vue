@@ -73,7 +73,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
-import type { LibraryBook } from '@/types';
+import type { LibraryBook } from '@/types/libraryTypes';
 import StarRating from '../components/StarRating.vue';
 import { X } from 'lucide-vue-next';
 

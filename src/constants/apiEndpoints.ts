@@ -1,6 +1,6 @@
-export const ApiEndpoints = {
+export const apiEndpoints = {
   books: {
-    base: '/books',
+    base: "/books",
 
     get getAll() {
       return this.base;
@@ -12,7 +12,7 @@ export const ApiEndpoints = {
   },
 
   library: {
-    base: '/library',
+    base: "/library",
 
     get getAll() {
       return this.base;
@@ -22,8 +22,12 @@ export const ApiEndpoints = {
       return this.base;
     },
 
-    getDetail(id: number | string) {
-      return `${this.base}/${id}`;
+    patch() {
+      return this.base;
+    },
+
+    delete(id: string) {
+      return this.base + "/" + id;
     },
   },
 };

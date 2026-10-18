@@ -76,8 +76,8 @@
 </template>
 
 <script setup lang="ts">
-import type { LibraryBook } from '@/types';
-import { useBookStatus } from '@/composables/useBookStatus';
+import type { LibraryBook } from '@/types/libraryTypes';
+import { readingStatusOptions } from '@/constants/readingStatus';
 import ProgressBar from './ProgressBar.vue';
 import StarRating from './StarRating.vue';
 import { BookOpen, Star, Trash2 } from 'lucide-vue-next';
@@ -92,7 +92,13 @@ defineEmits<{
   (e: 'remove', book: LibraryBook): void;
 }>();
 
-const { getStatusLabel, getStatusBadgeClass } = useBookStatus();
+const getStatusBadgeClass = (status: number) => {
+  return readingStatusOptions.find((o) => o.id === status)?.badgeClass ?? 'bg-slate-100 text-slate-800 border-slate-200';
+};
+
+const getStatusLabel = (status: number) => {
+  return readingStatusOptions.find((o) => o.id === status)?.label ?? 'Chưa xác định';
+};
 
 const handleImageError = (e: Event) => {
   (e.target as HTMLImageElement).src = '/placeholder-cover.svg';

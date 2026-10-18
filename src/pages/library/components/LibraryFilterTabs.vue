@@ -1,19 +1,27 @@
 <template>
-  <div class="flex items-center gap-1.5 p-1 bg-slate-200/80 rounded-2xl w-full sm:w-auto overflow-x-auto">
+  <div
+    class="flex items-center gap-1.5 p-1 bg-slate-200/80 rounded-2xl w-full sm:w-auto overflow-x-auto"
+  >
     <button
       v-for="tab in tabs"
       :key="String(tab.value)"
       @click="$emit('update:modelValue', tab.value)"
       class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition whitespace-nowrap flex items-center gap-1.5"
-      :class="modelValue === tab.value
-        ? 'bg-white text-slate-900 shadow-sm'
-        : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'"
+      :class="
+        modelValue === tab.value
+          ? 'bg-white text-slate-900 shadow-sm'
+          : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/50'
+      "
     >
       <span>{{ tab.label }}</span>
       <span
         v-if="tab.count !== undefined"
         class="text-[11px] px-1.5 py-0.2 rounded-full"
-        :class="modelValue === tab.value ? 'bg-slate-100 text-slate-700 font-semibold' : 'text-slate-500'"
+        :class="
+          modelValue === tab.value
+            ? 'bg-slate-100 text-slate-700 font-semibold'
+            : 'text-slate-500'
+        "
       >
         {{ tab.count }}
       </span>
@@ -22,22 +30,38 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { ReadingStatus, type LibraryStats } from '@/types';
+import { computed } from "vue";
+import { type LibraryStats } from "@/types/libraryTypes";
+import { ReadingStatusEnum } from "@/constants/readingStatus";
 
 const props = defineProps<{
-  modelValue: ReadingStatus | null;
+  modelValue: ReadingStatusEnum | null;
   stats: LibraryStats;
 }>();
 
 defineEmits<{
-  (e: 'update:modelValue', val: ReadingStatus | null): void;
+  (e: "update:modelValue", val: ReadingStatusEnum | null): void;
 }>();
 
 const tabs = computed(() => [
-  { label: 'Tất cả sách', value: null, count: props.stats.totalBooks },
-  { label: 'Muốn đọc', value: ReadingStatus.NOT_READ, count: props.stats.totalBooks - props.stats.readingBooks - props.stats.finishedBooks },
-  { label: 'Đang đọc', value: ReadingStatus.READING, count: props.stats.readingBooks },
-  { label: 'Đã hoàn thành', value: ReadingStatus.COMPLETED, count: props.stats.finishedBooks },
+  { label: "Tất cả sách", value: null, count: props.stats.totalBooks },
+  {
+    label: "Chưa đọc",
+    value: ReadingStatusEnum.NotRead,
+    count:
+      props.stats.totalBooks -
+      props.stats.readingBooks -
+      props.stats.finishedBooks,
+  },
+  {
+    label: "Đang đọc",
+    value: ReadingStatusEnum.Reading,
+    count: props.stats.readingBooks,
+  },
+  {
+    label: "Đã hoàn thành",
+    value: ReadingStatusEnum.Completed,
+    count: props.stats.finishedBooks,
+  },
 ]);
 </script>

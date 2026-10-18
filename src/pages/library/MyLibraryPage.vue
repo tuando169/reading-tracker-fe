@@ -1,9 +1,13 @@
 <template>
   <div class="space-y-6">
     <!-- Header Page -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div
+      class="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+    >
       <div>
-        <h1 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+        <h1
+          class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight"
+        >
           Tủ sách của tôi
         </h1>
         <p class="text-sm text-slate-500 font-medium mt-1">
@@ -24,7 +28,9 @@
     <LibraryStatsHeader :stats="libraryStore.stats" />
 
     <!-- Thanh lọc 3 Tab trạng thái -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+    <div
+      class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2"
+    >
       <LibraryFilterTabs
         v-model="libraryStore.selectedStatusTab"
         :stats="libraryStore.stats"
@@ -36,8 +42,13 @@
     </div>
 
     <!-- Loading State -->
-    <div v-if="libraryStore.isLoading" class="flex flex-col items-center justify-center py-20 gap-3">
-      <div class="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+    <div
+      v-if="libraryStore.isLoading"
+      class="flex flex-col items-center justify-center py-20 gap-3"
+    >
+      <div
+        class="w-10 h-10 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin"
+      ></div>
       <p class="text-sm font-semibold text-slate-500">Đang tải tủ sách...</p>
     </div>
 
@@ -60,12 +71,17 @@
       v-else-if="libraryStore.filteredBooks.length === 0"
       class="text-center py-16 px-4 bg-white rounded-3xl border border-slate-200 shadow-sm"
     >
-      <div class="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-3">
+      <div
+        class="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-3"
+      >
         <BookOpenCheck class="w-8 h-8" />
       </div>
-      <h3 class="text-base font-bold text-slate-800">Chưa có cuốn sách nào ở mục này</h3>
+      <h3 class="text-base font-bold text-slate-800">
+        Chưa có cuốn sách nào ở mục này
+      </h3>
       <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">
-        Hãy tìm kiếm sách mới và thêm vào tủ để bắt đầu theo dõi hành trình đọc của bạn.
+        Hãy tìm kiếm sách mới và thêm vào tủ để bắt đầu theo dõi hành trình đọc
+        của bạn.
       </p>
       <router-link
         to="/"
@@ -80,7 +96,7 @@
     <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
       <LibraryBookCard
         v-for="book in libraryStore.filteredBooks"
-        :key="book.bookId"
+        :key="book.id"
         :book="book"
         @update-progress="openProgressModal"
         @rate-note="openRatingModal"
@@ -118,18 +134,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useLibraryStore } from '@/stores/libraryStore';
-import { useToastStore } from '@/stores/toastStore';
-import { ReadingStatus, type LibraryBook } from '@/types';
-import { Plus, Search, BookOpenCheck } from 'lucide-vue-next';
+import { ref, onMounted } from "vue";
+import { useLibraryStore } from "@/stores/libraryStore";
+import { useToastStore } from "@/stores/toastStore";
+import { type LibraryBook } from "@/types/libraryTypes";
+import { ReadingStatusEnum } from "@/constants/readingStatus";
+import { Plus, Search, BookOpenCheck } from "lucide-vue-next";
 
-import LibraryStatsHeader from './components/LibraryStatsHeader.vue';
-import LibraryFilterTabs from './components/LibraryFilterTabs.vue';
-import LibraryBookCard from './components/LibraryBookCard.vue';
-import UpdateProgressModal from './modals/UpdateProgressModal.vue';
-import RatingModal from './modals/RatingModal.vue';
-import ConfirmDeleteModal from './modals/ConfirmDeleteModal.vue';
+import LibraryStatsHeader from "./components/LibraryStatsHeader.vue";
+import LibraryFilterTabs from "./components/LibraryFilterTabs.vue";
+import LibraryBookCard from "./components/LibraryBookCard.vue";
+import UpdateProgressModal from "./modals/UpdateProgressModal.vue";
+import RatingModal from "./modals/RatingModal.vue";
+import ConfirmDeleteModal from "./modals/ConfirmDeleteModal.vue";
 
 const libraryStore = useLibraryStore();
 const toastStore = useToastStore();
@@ -154,19 +171,19 @@ const openProgressModal = (book: LibraryBook) => {
   showProgressModal.value = true;
 };
 
-const handleSaveProgress = async ({ currentPage, status }: { currentPage: number; status: ReadingStatus }) => {
+const handleSaveProgress = async ({ currentPage }: { currentPage: number }) => {
   if (!activeBook.value) return;
 
   isActionSubmitting.value = true;
   try {
-    await libraryStore.updateBookProgress(activeBook.value.bookId, {
+    await libraryStore.updateBookProgress({
+      id: activeBook.value.id,
       currentPage,
-      status
     });
-    toastStore.success('Đã cập nhật tiến độ đọc sách thành công!');
+    toastStore.success("Đã cập nhật tiến độ đọc sách thành công!");
     showProgressModal.value = false;
   } catch (err: any) {
-    toastStore.error(err.message || 'Lỗi khi cập nhật tiến độ');
+    toastStore.error(err.message || "Lỗi khi cập nhật tiến độ");
   } finally {
     isActionSubmitting.value = false;
   }
@@ -177,19 +194,26 @@ const openRatingModal = (book: LibraryBook) => {
   showRatingModal.value = true;
 };
 
-const handleSaveRating = async ({ rating, note }: { rating: number; note: string }) => {
+const handleSaveRating = async ({
+  rating,
+  note,
+}: {
+  rating: number;
+  note: string;
+}) => {
   if (!activeBook.value) return;
 
   isActionSubmitting.value = true;
   try {
-    await libraryStore.updateBookProgress(activeBook.value.bookId, {
+    await libraryStore.updateBookProgress({
+      id: activeBook.value.id,
       rating,
-      note
+      note,
     });
-    toastStore.success('Đã lưu đánh giá & ghi chú!');
+    toastStore.success("Đã lưu đánh giá & ghi chú!");
     showRatingModal.value = false;
   } catch (err: any) {
-    toastStore.error(err.message || 'Lỗi khi lưu đánh giá');
+    toastStore.error(err.message || "Lỗi khi lưu đánh giá");
   } finally {
     isActionSubmitting.value = false;
   }
@@ -205,11 +229,11 @@ const handleConfirmDelete = async () => {
 
   isActionSubmitting.value = true;
   try {
-    await libraryStore.removeBook(activeBook.value.bookId);
+    await libraryStore.removeBook(activeBook.value.id);
     toastStore.success(`Đã xóa "${activeBook.value.title}" khỏi tủ sách.`);
     showDeleteModal.value = false;
   } catch (err: any) {
-    toastStore.error(err.message || 'Lỗi khi xóa sách');
+    toastStore.error(err.message || "Lỗi khi xóa sách");
   } finally {
     isActionSubmitting.value = false;
   }

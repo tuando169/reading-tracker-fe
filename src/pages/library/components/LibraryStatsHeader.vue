@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import type { LibraryStats } from '@/types';
+import type { LibraryStats } from '@/types/libraryTypes';
 import { BookOpen, Clock, Trophy } from 'lucide-vue-next';
 
 defineProps<{
