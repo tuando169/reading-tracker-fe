@@ -60,22 +60,12 @@
             >
               <BookOpen class="w-3.5 h-3.5 text-slate-400" />
               <span>
-                {{ book.totalPages ? `${book.totalPages} trang` : "Chưa rõ số trang" }}
+                {{
+                  book.totalPages
+                    ? `${book.totalPages} trang`
+                    : "Chưa rõ số trang"
+                }}
               </span>
-            </span>
-            <span
-              v-if="book.startedAt"
-              class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-slate-600 font-medium flex items-center gap-1 shadow-2xs"
-            >
-              <Calendar class="w-3.5 h-3.5 text-indigo-500" />
-              <span>Bắt đầu: {{ formatDate(book.startedAt) }}</span>
-            </span>
-            <span
-              v-if="book.finishedAt"
-              class="px-2.5 py-1 bg-white border border-slate-200 rounded-lg text-slate-600 font-medium flex items-center gap-1 shadow-2xs"
-            >
-              <CheckCircle2 class="w-3.5 h-3.5 text-emerald-500" />
-              <span>Đọc xong: {{ formatDate(book.finishedAt) }}</span>
             </span>
           </div>
 
@@ -120,7 +110,9 @@
       </div>
 
       <!-- Footer Buttons -->
-      <div class="flex items-center justify-end gap-3 pt-2 border-t border-slate-100">
+      <div
+        class="flex items-center justify-end gap-3 pt-2 border-t border-slate-100"
+      >
         <button
           type="button"
           @click="$emit('close')"

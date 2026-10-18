@@ -25,10 +25,17 @@
 import { computed } from 'vue';
 import { calculateProgress } from '@/utils/formatters';
 
-const props = defineProps<{
-  currentPage: number;
-  totalPages: number;
-}>();
+const props = withDefaults(
+  defineProps<{
+    currentPage: number;
+    totalPages?: number | null;
+  }>(),
+  {
+    totalPages: 0,
+  },
+);
 
-const percent = computed(() => calculateProgress(props.currentPage, props.totalPages));
+const percent = computed(() =>
+  calculateProgress(props.currentPage, props.totalPages || 0),
+);
 </script>
